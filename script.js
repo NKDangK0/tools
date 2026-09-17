@@ -1,0 +1,8 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById("btn");
+    const message = document.getElementById("msg");
+
+    button.addEventListener("click", () => {
+        message.classList.remove("hidden");
+    });
+});
