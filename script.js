@@ -15,24 +15,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         resultBox.classList.remove("hidden");
         targetLink.classList.add("hidden");
-        message.textContent = "⏳ Đang giải mã và vượt link, vui lòng đợi...";
+        message.textContent = "🤖 AI đang tự động vượt link, vui lòng chờ giây lát...";
 
         try {
-            // Sử dụng API bypass công khai
-            const apiUrl = `https://api.bypass.vip/bypass?url=${encodeURIComponent(inputUrl)}`;
+            // Gửi link cho AI/API tự động giải mã ngầm
+            const apiUrl = `https://ethon-bypass-api.vercel.app/api/bypass?url=${encodeURIComponent(inputUrl)}`;
             const response = await fetch(apiUrl);
             const data = await response.json();
 
-            if (data && data.result) {
-                message.textContent = "✅ Vượt link thành công!";
-                targetLink.href = data.result;
-                targetLink.textContent = "👉 Bấm vào đây để tới link đích";
+            let finalUrl = data.result || data.bypassed_url || data.url;
+
+            // Kiểm tra nếu AI vượt thành công và trả về đúng link web
+            if (finalUrl && (finalUrl.startsWith("http://") || finalUrl.startsWith("https://"))) {
+                message.textContent = "🎉 AI đã vượt link thành công!";
+                targetLink.href = finalUrl;
+                targetLink.textContent = "🚀 Bấm vào đây để tới thẳng trang web gốc";
                 targetLink.classList.remove("hidden");
             } else {
-                message.textContent = "❌ Không thể giải mã link này hoặc link không được hỗ trợ.";
+                message.textContent = "❌ AI không thể vượt được link này hoặc link không hỗ trợ.";
             }
         } catch (error) {
-            message.textContent = "⚠️ Lỗi kết nối tới Server API bypass. Vui lòng thử lại sau!";
+            message.textContent = "⚠️ Lỗi kết nối tới AI vượt link. Vui lòng thử lại sau!";
         }
     });
 });
