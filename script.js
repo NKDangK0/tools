@@ -5,36 +5,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const message = document.getElementById("msg");
     const targetLink = document.getElementById("targetLink");
 
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
         const inputUrl = urlInput.value.trim();
 
         if (!inputUrl) {
-            alert("Vui lòng dán một đường link vào ô, boss man!");
+            alert("Vui lòng dán đường link cần vượt vào ô, boss man!");
             return;
         }
 
         resultBox.classList.remove("hidden");
-        message.textContent = "Đang phân tích link...";
+        targetLink.classList.add("hidden");
+        message.textContent = "⏳ Đang giải mã và vượt link, vui lòng đợi...";
 
         try {
-            const parsed = new URL(inputUrl);
-            
-            // Đọc tham số đính kèm nếu link chứa dạng ?url= hoặc ?dest=
-            const params = new URLSearchParams(parsed.search);
-            const redirectUrl = params.get("url") || params.get("dest") || params.get("target") || params.get("redirect");
+            // Sử dụng API bypass công khai
+            const apiUrl = `https://api.bypass.vip/bypass?url=${encodeURIComponent(inputUrl)}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
 
-            if (redirectUrl) {
-                message.textContent = "Đã trích xuất được link đích thành công!";
-                targetLink.href = redirectUrl;
+            if (data && data.result) {
+                message.textContent = "✅ Vượt link thành công!";
+                targetLink.href = data.result;
+                targetLink.textContent = "👉 Bấm vào đây để tới link đích";
                 targetLink.classList.remove("hidden");
             } else {
-                message.textContent = "Link hợp lệ. Đang chuyển hướng...";
-                targetLink.href = inputUrl;
-                targetLink.classList.remove("hidden");
+                message.textContent = "❌ Không thể giải mã link này hoặc link không được hỗ trợ.";
             }
-        } catch (e) {
-            message.textContent = "Đường link không đúng định dạng. Hãy kiểm tra lại, boss man!";
-            targetLink.classList.add("hidden");
+        } catch (error) {
+            message.textContent = "⚠️ Lỗi kết nối tới Server API bypass. Vui lòng thử lại sau!";
         }
     });
 });
