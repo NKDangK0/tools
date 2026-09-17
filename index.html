@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Web Của Tôi</title>
+    <title>Link Tools - Boss Man</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="card">
-        <h1>Chủ Website</h1>
-        <p>Trang web cá nhân đầu tiên được khởi tạo thành công.</p>
-        <button id="btn">Bấm Vào Đây</button>
-        <p id="msg" class="hidden">Cảm ơn boss man đã ghé thăm!</p>
+        <h1>Link Resolver Tool</h1>
+        <p>Dán đường link cần kiểm tra vào bên dưới:</p>
+        
+        <input type="text" id="urlInput" placeholder="https://example.com/link..." />
+        <button id="btn">Xử Lý Link</button>
+        
+        <div id="resultBox" class="hidden">
+            <p id="msg"></p>
+            <a id="targetLink" href="#" target="_blank" class="hidden">Truy cập đường link gốc</a>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
