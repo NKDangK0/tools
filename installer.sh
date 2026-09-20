@@ -16,14 +16,14 @@ echo "=========================================="
 rm -rf /sdcard/Download/DeltaClones
 mkdir -p /sdcard/Download/DeltaClones
 
-# 3. Danh sách link 8 app từ GitHub Release v1.1
+# 3. Danh sách link chính xác 100% từ giao diện Release v1.1 trong ảnh
 LINKS=(
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.01-2.738.1397.apk_clone.a"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.04-2.738.1397.apk_clone.a"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.03-2.738.1397.apk_clone.a"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.02-2.738.1397.apk_clone.a"
+  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.01-2.738.1397.apk_clone.apk"
+  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.02-2.738.1397.apk_clone.apk"
+  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.03-2.738.1397.apk_clone.apk"
+  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.04-2.738.1397.apk_clone.apk"
+  "https://github.com/NKDangK0/tools/releases/download/v1.1/com-cloudflare-onedotonedotonedotone-3837-66752135-ef8b2f5f382404189163d4d14c3128a8.apk"
   "https://github.com/NKDangK0/tools/releases/download/v1.1/termux-boot-app_v0.8.1%2Bgithub.debug.apk"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/com-cloudflare-onedotonedotonedotone-3837-66752135-ef8"
   "https://github.com/NKDangK0/tools/releases/download/v1.1/ZArchiver_1.0.10_APKPure.apk"
   "https://github.com/NKDangK0/tools/releases/download/v1.1/MT%2BManager_2.26.8_APKPure.apk"
 )
@@ -33,13 +33,13 @@ NAMES=(
   "Delta_2.apk"
   "Delta_3.apk"
   "Delta_4.apk"
-  "Termux_Boot.apk"
   "Warp_1111.apk"
+  "Termux_Boot.apk"
   "ZArchiver.apk"
   "MT_Manager.apk"
 )
 
-# 4. Vòng lặp tải và ép cài ngầm qua /data/local/tmp/
+# 4. Vòng lặp tải và ép cài ngầm
 for i in "${!LINKS[@]}"; do
     url="${LINKS[$i]}"
     name="${NAMES[$i]}"
@@ -52,7 +52,6 @@ for i in "${!LINKS[@]}"; do
     
     if [ -f "$sd_path" ] && [ -s "$sd_path" ]; then
         echo "[+] Đang tự động cài $name..."
-        # Copy sang /data/local/tmp để bypass lỗi SELinux của /sdcard
         su -c "cp '$sd_path' '$tmp_path' && chmod 777 '$tmp_path'"
         su -c "pm install -r -d -g -i com.android.shell '$tmp_path'" || su -c "cmd package install -r -d -g '$tmp_path'"
         su -c "rm -f '$tmp_path'"
