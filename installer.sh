@@ -22,9 +22,9 @@ LINKS=(
   "https://github.com/NKDangK0/tools/releases/download/v1.1/ZArchiver_1.0.10_APKPure.apk"
 )
 
-# 3. Tạo thư mục tạm trong bộ nhớ hệ thống (Tránh lỗi SELinux của /sdcard)
+# 3. Tạo thư mục tạm bằng Root
 DEST_DIR="/data/local/tmp/installer_apks"
-su -c "mkdir -p '$DEST_DIR' && chmod 777 '$DEST_DIR'"
+su -c "mkdir -p '$DEST_DIR'"
 
 # 4. Tiến hành tải và cài đặt
 for url in "${LINKS[@]}"; do
@@ -36,17 +36,13 @@ for url in "${LINKS[@]}"; do
   fi
 
   echo "--> Đang tải: $filename..."
-  curl -L -s -o "$filepath" "$url"
+  # Tải trực tiếp bằng quyền Root để không bị chặn
+  su -c "curl -L -s -o '$filepath' '$url'"
 
-  if [ -f "$filepath" ]; then
-    echo "--> Đang cài đặt: $(basename "$filepath")..."
-    # Cấp quyền đọc file cho Android Package Manager trước khi cài
-    chmod 666 "$filepath"
-    su -c "pm install -r '$filepath'"
-    rm -f "$filepath"
-  else
-    echo "[!] Lỗi: Không thể tải $filename"
-  fi
+  echo "--> Đang cài đặt: $(basename "$filepath")..."
+  # Cài đặt và hiển thị kết quả trực tiếp ra màn hình
+  su -c "pm install -r '$filepath'"
+  su -c "rm -f '$filepath'"
 done
 
 # Dọn dẹp
