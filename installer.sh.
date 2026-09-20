@@ -1,26 +1,24 @@
 #!/bin/bash
 echo "=== BẮT ĐẦU TỰ ĐỘNG TẢI & CÀI ĐẶT TOÀN BỘ APP ==="
 
-# 1. Tắt Play Protect và ép "Độ rộng nhỏ nhất" (Smallest Width) lên 600 DPI
-echo "[+] Đang tắt Play Protect và chỉnh Độ rộng nhỏ nhất (DPI) lên 600dp..."
+# 1. Tắt Google Play Protect và chỉnh DPI màn hình chuẩn 600dp
+echo "[+] Đang tắt Play Protect và chỉnh DPI màn hình 600dp..."
 su -c "settings put global package_verifier_enable 0"
 su -c "settings put global upload_apk_enable 0"
-
-# Đặt độ phân giải màn hình chuẩn 1080x1920 để hệ thống cho phép nâng DPI lên 600
-su -c "wm size 1080x1920"
-su -c "wm density 600"
+su -c "wm size 720x1280"
+su -c "wm density 240"
 su -c "pkill com.android.systemui"
 
 # 2. Xoá thư mục cũ và tạo thư mục lưu trữ mới
 rm -rf /sdcard/Download/DeltaClones
 mkdir -p /sdcard/Download/DeltaClones
 
-# 3. Danh sách link 8 app
+# 3. Danh sách link 8 app (Đã thay 4 link Delta mới)
 LINKS=(
-  "https://files.catbox.moe/0v06v2.apk"
-  "https://files.catbox.moe/u3v1n4.apk"
-  "https://files.catbox.moe/6ne7jw.apk"
-  "https://files.catbox.moe/6hn4h8.apk"
+  "https://files.catbox.moe/2jbbar.apk"
+  "https://files.catbox.moe/qhkri6.apk"
+  "https://files.catbox.moe/v5q1jq.apk"
+  "https://files.catbox.moe/l2b4ei.apk"
   "https://f-droid.org/repo/com.termux.boot_7.apk"
   "https://files.catbox.moe/c601zz.apk"
   "https://files.catbox.moe/lksppe.apk"
@@ -38,29 +36,18 @@ NAMES=(
   "MT_Manager.apk"
 )
 
-# 4. Tải đồng thời toàn bộ 8 file (chạy ngầm song song cho tốc độ tối đa)
-echo "--------------------------------------------"
-echo "[+] Đang tải đồng thời 8 file..."
-
+# 4. Vòng lặp tải và ép cài ngầm
 for i in "${!LINKS[@]}"; do
     url="${LINKS[$i]}"
     name="${NAMES[$i]}"
     path="/sdcard/Download/DeltaClones/$name"
     
-    curl -L --connect-timeout 10 --retry 3 -s -o "$path" "$url" &
-done
-
-# Chờ toàn bộ file tải xong
-wait
-echo "[✔] Đã tải xong toàn bộ 8 file!"
-
-# 5. Ép cài ngầm lần lượt từng ứng dụng
-for i in "${!NAMES[@]}"; do
-    name="${NAMES[$i]}"
-    path="/sdcard/Download/DeltaClones/$name"
+    echo "--------------------------------------------"
+    echo "[+] Đang tải $name..."
+    curl -L --connect-timeout 15 -o "$path" "$url"
     
     echo "[+] Đang tự động cài $name..."
     su -c "pm install -r -d -g -i com.android.shell '$path'" || su -c "cmd package install -r -d -g '$path'"
 done
 
-echo "=== ĐÃ HOÀN THÀNH CÀI ĐẶT TOÀN BỘ 8 ỨNG DỤNG & ĐÃ ĐỔI THÀNH 600 DPI! ==="
+echo "=== ĐÃ HOÀN THÀNH CÀI ĐẶT TOÀN BỘ 8 ỨNG DỤNG & CHỈNH DPI 600DP! ==="
