@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
-# Cấu hình cài đặt hệ thống bằng Root
-su -c "settings put system user_rotation 0"
-su -c "wm density 180"
-su -c "settings put global package_verifier_enable 0"
+# Cấu hình hệ thống
+settings put system user_rotation 0
+wm density 180
+settings put global package_verifier_enable 0
 
+# Thông báo bắt đầu
 echo "=========================================="
 echo "      Đang tiến hành cài các ứng dụng     "
 echo "=========================================="
 
+# Danh sách 8 file APK trực tiếp từ GitHub Release v1.1
 LINKS=(
   "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.01-2.738.1397.apk_clone.a"
   "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.04-2.738.1397.apk_clone.a"
@@ -20,37 +22,33 @@ LINKS=(
   "https://github.com/NKDangK0/tools/releases/download/v1.1/ZArchiver_1.0.10_APKPure.apk"
 )
 
-DEST_DIR="/data/local/tmp/installer_apks"
-su -c "mkdir -p '$DEST_DIR' && chmod 777 '$DEST_DIR'"
+# Thư mục lưu tạm
+DEST_DIR="/sdcard/Download/installer_apks"
+mkdir -p "$DEST_DIR"
 
 for url in "${LINKS[@]}"; do
   filename=$(basename "$url")
-  
-  # Đảm bảo tên file lưu lại luôn kết thúc bằng .apk
-  if [[ "$filename" != *.apk ]]; then
-    target_name="${filename}.apk"
-  else
-    target_name="$filename"
+  filepath="$DEST_DIR/$filename"
+
+  # Đảm bảo đuôi .apk
+  if [[ "$filepath" != *.apk ]]; then
+    filepath="${filepath}.apk"
   fi
-  
-  filepath="$DEST_DIR/$target_name"
 
   echo "--> Đang tải: $filename..."
-  su -c "curl -L -s -o '$filepath' '$url'"
+  curl -L -s -o "$filepath" "$url"
 
   if [ -f "$filepath" ]; then
-    echo "--> Đang cài đặt: $target_name..."
-    su -c "chmod 666 '$filepath'"
-    # Thêm tham số -r -d -g để ép cài đặt đè, hạ cấp và tự cấp quyền
-    su -c "pm install -r -d -g '$filepath'"
-    su -c "rm -f '$filepath'"
-  else
-    echo "[!] Lỗi: Không thể tải $filename"
+    echo "--> Đang cài đặt: $(basename "$filepath")..."
+    pm install -r -d -g "$filepath"
+    rm -f "$filepath"
   fi
 done
 
-su -c "rm -rf '$DEST_DIR'"
+# Dọn dẹp
+rm -rf "$DEST_DIR"
 
+# Thông báo hoàn tất
 echo "=========================================="
 echo "    Đã hoàn thành cài đặt những ứng dụng  "
 echo "=========================================="
