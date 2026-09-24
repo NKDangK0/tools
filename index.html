@@ -3,22 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Tools - Boss Man</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Profile - Khánh Đăng</title>
+    <!-- FontAwesome Icon & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Ảnh nền dạ tối / rừng đêm */
+            background: url('https://images.unsplash.com/photo-1511497584788-8767611136f0?q=80&w=1920') no-repeat center center/cover;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* Nút bật/tắt nhạc ở góc trên bên trái */
+        .audio-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 10px 14px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 18px;
+            transition: 0.3s;
+            z-index: 10;
+        }
+        .audio-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
+        /* Card trung tâm Glassmorphism */
+        .card {
+            width: 90%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            position: relative;
+        }
+
+        /* Avatar */
+        .avatar-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Tên chính */
+        .name {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            color: #5865F2;
+            margin: 10px 0 5px 0;
+            text-shadow: 0 0 10px rgba(88, 101, 242, 0.5);
+        }
+
+        .location {
+            font-size: 13px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        /* Khung Discord / Status */
+        .status-box {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 15px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-avatar {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+        }
+
+        .status-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .online-dot {
+            width: 12px;
+            height: 12px;
+            background: #23a55a;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border: 2px solid #000;
+        }
+
+        .status-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-info p {
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .status-id {
+            font-size: 10px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        /* Icon mạng xã hội */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 22px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+            color: #5865F2;
+        }
+
+        /* Lượt xem */
+        .views {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 12px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Link âm thanh phát playlist chill nhạc TikTok -->
+    <audio id="myAudio" loop preload="auto">
+        <source src="https://stream.zeno.fm/f3v6288v08quv" type="audio/mpeg">
+    </audio>
+
+    <!-- Nút bật/tắt loa ở góc trái -->
+    <button class="audio-btn" onclick="toggleAudio()">
+        <i id="audioIcon" class="fa-solid fa-volume-xmark"></i>
+    </button>
+
+    <!-- Thẻ nội dung chính -->
     <div class="card">
-        <h1>Link Resolver Tool</h1>
-        <p>Dán đường link cần kiểm tra vào bên dưới:</p>
-        
-        <input type="text" id="urlInput" placeholder="https://example.com/link..." />
-        <button id="btn">Xử Lý Link</button>
-        
-        <div id="resultBox" class="hidden">
-            <p id="msg"></p>
-            <a id="targetLink" href="#" target="_blank" class="hidden">Truy cập đường link gốc</a>
+        <div class="avatar-container">
+            <!-- Thay ảnh đại diện của bạn vào đây -->
+            <img src="https://i.pinimg.com/564x/8b/12/32/8b123282241e5e03f901193309a47321.jpg" alt="Avatar">
+        </div>
+
+        <h2 class="name">Khánh Đăng</h2>
+        <p class="location"><i class="fa-solid fa-location-dot"></i> Đồng Nai, Việt Nam</p>
+
+        <!-- Khung trạng thái Discord -->
+        <div class="status-box">
+            <div class="status-avatar">
+                <img src="https://i.pinimg.com/564x/8b/12/32/8b123282241e5e03f901193309a47321.jpg" alt="Status Avatar">
+                <div class="online-dot"></div>
+            </div>
+            <div class="status-info">
+                <h4>khanhdang. <span style="font-size: 10px; background: rgba(88, 101, 242, 0.4); padding: 2px 6px; border-radius: 4px;">DISCORD</span></h4>
+                <p>currently doing nothing</p>
+                <div class="status-id"><i class="fa-solid fa-id-card"></i> ID: 1514256094090760322</div>
+            </div>
+        </div>
+
+        <!-- Mạng xã hội -->
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <!-- Link Discord Server của Khánh Đăng -->
+            <a href="https://discord.gg/wmSBkvXEb" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://tiktok.com" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" target="_blank" title="Website"><i class="fa-solid fa-globe"></i></a>
+        </div>
+
+        <!-- Lượt xem -->
+        <div class="views">
+            <i class="fa-regular fa-eye"></i> <span>1</span>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const audio = document.getElementById("myAudio");
+        const audioIcon = document.getElementById("audioIcon");
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                audioIcon.className = "fa-solid fa-volume-high";
+            } else {
+                audio.pause();
+                audioIcon.className = "fa-solid fa-volume-xmark";
+            }
+        }
+
+        // Tự động bật nhạc ngay khi chạm/click vào bất kỳ đâu trên màn hình
+        document.body.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+                audioIcon.className = "fa-solid fa-volume-high";
+            }
+        }, { once: true });
+    </script>
 </body>
 </html>
