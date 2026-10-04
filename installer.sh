@@ -9,7 +9,7 @@ su -c "pkill com.android.systemui"
 
 # Thông báo bắt đầu
 echo "=========================================="
-echo "      Đang tiến hành cài các ứng dụng     "
+echo "    Đang tiến hành cài các ứng dụng       "
 echo "=========================================="
 
 # 2. Xoá thư mục cũ và tạo thư mục lưu trữ mới
@@ -18,25 +18,25 @@ mkdir -p /sdcard/Download/DeltaClones
 
 # 3. Danh sách link cập nhật phiên bản mới 2.740.931
 LINKS=(
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.01-2.740.931.apk_clone.apk"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.02-2.740.931.apk_clone.apk"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.03-2.740.931.apk_clone.apk"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.04-2.740.931.apk_clone.apk"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/com-cloudflare-onedotonedotonedotone-3837-66752135-ef8b2f5f382404189163d4d14c3128a8.apk"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/termux-boot-app_v0.8.1%2Bgithub.debug.apk"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/ZArchiver_1.0.10_APKPure.apk"
-  "https://github.com/NKDangK0/tools/releases/download/v1.1/MT%2BManager_2.26.8_APKPure.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.01-2.740.931.apk_clone.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.02-2.740.931.apk_clone.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.03-2.740.931.apk_clone.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT.No_SameHwi.By.Anya.04-2.740.931.apk_clone.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/com-cloudflare-onedotonedotonedotone-3837-66752135-ef8b2f5f382404189163d4d14c3128a8.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/termux-boot-app_v0.8.1%2Bgithub.debug.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/ZArchiver_1.0.10_APKPure.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/MT%2BManager_2.26.8_APKPure.apk"
 )
 
 NAMES=(
-  "Delta_1.apk"
-  "Delta_2.apk"
-  "Delta_3.apk"
-  "Delta_4.apk"
-  "Warp_1111.apk"
-  "Termux_Boot.apk"
-  "ZArchiver.apk"
-  "MT_Manager.apk"
+"Delta_1.apk"
+"Delta_2.apk"
+"Delta_3.apk"
+"Delta_4.apk"
+"Warp_1111.apk"
+"Termux_Boot.apk"
+"ZArchiver.apk"
+"MT_Manager.apk"
 )
 
 # 4. Vòng lặp tải và ép cài ngầm
@@ -45,11 +45,11 @@ for i in "${!LINKS[@]}"; do
     name="${NAMES[$i]}"
     sd_path="/sdcard/Download/DeltaClones/$name"
     tmp_path="/data/local/tmp/$name"
-    
-    echo "--------------------------------------------"
+
+    echo "----------------------------------------"
     echo "[+] Đang tải $name..."
     curl -L --connect-timeout 20 -o "$sd_path" "$url"
-    
+
     if [ -f "$sd_path" ] && [ -s "$sd_path" ]; then
         echo "[+] Đang tự động cài $name..."
         su -c "cp '$sd_path' '$tmp_path' && chmod 777 '$tmp_path'"
