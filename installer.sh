@@ -16,7 +16,7 @@ echo "========================================="
 rm -rf /sdcard/Download/DeltaClones
 mkdir -p /sdcard/Download/DeltaClones
 
-# 3. Danh sách link khớp chính xác với Release v1.1 của bạn
+# 3. Danh sách link các ứng dụng
 LINKS=(
 "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT_No_SameHwi.By.Anya.01-2.741.1062.apk_clone.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT_No_SameHwi.By.Anya.02-2.741.1062.apk_clone.apk"
@@ -50,10 +50,14 @@ for i in "${!LINKS[@]}"; do
   curl -L --connect-timeout 20 -o "$sd_path" "$url"
 
   if [ -f "$sd_path" ] && [ -s "$sd_path" ]; then
-    echo "[+] Đang tự động cài $name..."
-    su -c "pm install -r -d -g '$sd_path'" || su -c "cmd package install -r -d -g '$sd_path'"
+    echo "[+] Đang cài đặt $name..."
+    if su -c "pm install -r -d -g '$sd_path'" || su -c "cmd package install -r -d -g '$sd_path'"; then
+      echo "[✓] Đã cài thành công: $name"
+    else
+      echo "[!] Lỗi hệ thống khi cài $name (APK không tương thích)"
+    fi
   else
-    echo "[!] Lỗi: Không tải được $name"
+    echo "[!] Lỗi: Không tải được file $name từ GitHub"
   fi
 done
 
@@ -62,5 +66,5 @@ rm -rf /sdcard/Download/DeltaClones
 
 # Thông báo hoàn tất
 echo "========================================="
-echo "   Đã hoàn thành cài đặt những ứng dụng  "
+echo "   Đã chạy xong quy trình cài đặt ứng dụng"
 echo "========================================="
