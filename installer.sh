@@ -16,16 +16,16 @@ echo "========================================="
 rm -rf /sdcard/Download/DeltaClones
 mkdir -p /sdcard/Download/DeltaClones
 
-# 3. Danh sách link khớp chính xác với Release v1.1 trên GitHub của bạn
+# 3. Danh sách link khớp chính xác với Release v1.1 của bạn
 LINKS=(
 "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT_No_SameHwi.By.Anya.01-2.741.1062.apk_clone.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT_No_SameHwi.By.Anya.02-2.741.1062.apk_clone.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT_No_SameHwi.By.Anya.03-2.741.1062.apk_clone.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT_No_SameHwi.By.Anya.04-2.741.1062.apk_clone.apk"
-"https://github.com/NKDangK0/tools/releases/download/v1.1/com-cloudflare-onedotonedotonedotone-3837-66752135-ef8b2f5f382404189163d414c3128a8.apk"
-"https://github.com/NKDangK0/tools/releases/download/v1.1/termux-boot-app_v0.8.1%2Bgithub.debug.apk"
-"https://github.com/NKDangK0/tools/releases/download/v1.1/ZArchiver_1.0.10_APKPure.apk"
-"https://github.com/NKDangK0/tools/releases/download/v1.1/MT%2B2BManager_2.26.8_APKPure.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/WARP.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/termux-boot-app_v0.8.1%2Bgithub.debug.1.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/ru-zdevs-zarchiver-pro-9595-57938212-9383d33dd7cc90d9d.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/MT-Manager_2.14.5_v8a.apk"
 )
 
 NAMES=(
