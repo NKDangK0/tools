@@ -15,7 +15,7 @@ echo "========================================="
 rm -rf /sdcard/Download/DeltaClones
 mkdir -p /sdcard/Download/DeltaClones
 
-# 3. Danh sách link gốc chính xác từ release của bạn
+# 3. Danh sách link gốc chính xác của bạn
 LINKS=(
 "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT_No_SameHwi.By.Anya.01-2.741.1062.apk_clone.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/DeltaX_QT_No_SameHwi.By.Anya.02-2.741.1062.apk_clone.apk"
@@ -27,6 +27,7 @@ LINKS=(
 "https://github.com/NKDangK0/tools/releases/download/v1.1/MT-Manager_2.14.5_v8a.apk"
 )
 
+# 4. Tên file lưu tương ứng giữ nguyên tên chuẩn để không bao giờ lệch
 NAMES=(
 "delta1.apk"
 "delta2.apk"
@@ -38,25 +39,25 @@ NAMES=(
 "mtmanager.apk"
 )
 
-# 4. Vòng lặp tải và cài đặt
+# 5. Vòng lặp tải và cài đặt
 for i in "${!LINKS[@]}"; do
   url="${LINKS[$i]}"
   name="${NAMES[$i]}"
   sd_path="/sdcard/Download/DeltaClones/$name"
 
   echo "-----------------------------------------"
-  echo "[+] Đang tải $name..."
-  curl -L --connect-timeout 20 -o "$sd_path" "$url"
+  echo "[+] Đang tải ứng dụng $((i+1))..."
+  curl -L --connect-timeout 30 -o "$sd_path" "$url"
 
   if [ -f "$sd_path" ] && [ -s "$sd_path" ]; then
-    echo "[+] Đang cài đặt $name..."
+    echo "[+] Đang cài đặt..."
     if su -c "pm install -r -d -g '$sd_path'" || su -c "cmd package install -r -d -g '$sd_path'"; then
-      echo "[✓] Đã cài thành công: $name"
+      echo "[✓] Đã cài thành công ứng dụng $((i+1))"
     else
-      echo "[!] Lỗi hệ thống khi cài $name"
+      echo "[!] Lỗi khi cài ứng dụng $((i+1))"
     fi
   else
-    echo "[!] Lỗi: Không tải được file $name (Kiểm tra lại link Release)"
+    echo "[!] Lỗi: Không tải được file (Kiểm tra lại đường dẫn Release)"
   fi
 done
 
