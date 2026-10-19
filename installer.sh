@@ -22,7 +22,7 @@ DIR="/sdcard/Download/DeltaClones"
 rm -rf "$DIR"
 mkdir -p "$DIR"
 
-# 4. Danh sách link ngắn gọn từ Release v1.1 của bạn
+# 4. Danh sách 7 ứng dụng (Đã loại bỏ Termux-Boot)
 LINKS=(
 "https://github.com/NKDangK0/tools/releases/download/v1.1/delta1.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/delta2.apk"
@@ -30,7 +30,6 @@ LINKS=(
 "https://github.com/NKDangK0/tools/releases/download/v1.1/delta4.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/mtmanager.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/zarchiver.apk"
-"https://github.com/NKDangK0/tools/releases/download/v1.1/termuxboot.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/warp.apk"
 )
 
@@ -41,7 +40,6 @@ NAMES=(
 "delta4.apk"
 "mtmanager.apk"
 "zarchiver.apk"
-"termuxboot.apk"
 "warp.apk"
 )
 
