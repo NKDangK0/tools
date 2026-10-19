@@ -1,12 +1,8 @@
 #!/bin/bash
 
 # ====================================================
-# 1. TỰ ĐỘNG ĐỔI MIRROR TERMUX SANG MÁY CHỦ KHỎE NHẤT
+# 1. TẮT PLAY PROTECT & CHỈNH DPI MÀN HÌNH
 # ====================================================
-echo "[+] Đang kiểm tra và tối ưu máy chủ Termux..."
-termux-change-repo --auto 2>/dev/null || pkg change-repo --auto 2>/dev/null
-
-# 2. Tắt Play Protect và chỉnh DPI màn hình
 su -c "settings put global package_verifier_enable 0"
 su -c "settings put global upload_apk_enable 0"
 su -c "wm size 720x1280"
@@ -17,12 +13,12 @@ echo "========================================="
 echo "      Đang tiến hành cài các ứng dụng     "
 echo "========================================="
 
-# 3. Tạo thư mục lưu tạm
+# 2. Tạo thư mục lưu tạm
 DIR="/sdcard/Download/DeltaClones"
 rm -rf "$DIR"
 mkdir -p "$DIR"
 
-# 4. Danh sách 7 ứng dụng (Đã loại bỏ Termux-Boot)
+# 3. Danh sách 7 ứng dụng chuẩn của bạn
 LINKS=(
 "https://github.com/NKDangK0/tools/releases/download/v1.1/delta1.apk"
 "https://github.com/NKDangK0/tools/releases/download/v1.1/delta2.apk"
@@ -43,7 +39,7 @@ NAMES=(
 "warp.apk"
 )
 
-# 5. Vòng lặp tải và cài đặt
+# 4. Vòng lặp tải và cài đặt ngầm
 for i in "${!LINKS[@]}"; do
   url="${LINKS[$i]}"
   name="${NAMES[$i]}"
