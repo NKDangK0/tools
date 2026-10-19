@@ -1,40 +1,69 @@
 #!/bin/bash
 
+# 1. Tắt Play Protect và chỉnh DPI màn hình
 su -c "settings put global package_verifier_enable 0"
+su -c "settings put global upload_apk_enable 0"
 su -c "wm size 720x1280"
 su -c "wm density 240"
+su -c "pkill com.android.systemui"
 
-echo "=== TEST CAI 2 APP ==="
+echo "========================================="
+echo "      Đang tiến hành cài các ứng dụng     "
+echo "========================================="
 
-rm -rf /sdcard/Download/DeltaClones
-mkdir -p /sdcard/Download/DeltaClones
+# 2. Tạo thư mục lưu tạm
+DIR="/sdcard/Download/DeltaClones"
+rm -rf "$DIR"
+mkdir -p "$DIR"
 
+# 3. Danh sách link khớp chuẩn 100% với tên file trên Release
 LINKS=(
-"https://github.com/NKDangK0/tools/releases/download/v1.1/ru-zdevs-zarchiver-pro-9595-57938212-9383d33dd7cc90d9d.apk"
-"https://github.com/NKDangK0/tools/releases/download/v1.1/MT-Manager_2.14.5_v8a.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/delta1.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/delta2.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/delta3.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/delta4.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/mtmanager.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/zarchiver.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/termuxboot.apk"
+"https://github.com/NKDangK0/tools/releases/download/v1.1/warp.apk"
 )
 
 NAMES=(
-"zarchiver.apk"
+"delta1.apk"
+"delta2.apk"
+"delta3.apk"
+"delta4.apk"
 "mtmanager.apk"
+"zarchiver.apk"
+"termuxboot.apk"
+"warp.apk"
 )
 
+# 4. Tải và cài đặt từng ứng dụng
 for i in "${!LINKS[@]}"; do
   url="${LINKS[$i]}"
   name="${NAMES[$i]}"
-  sd_path="/sdcard/Download/DeltaClones/$name"
+  path="$DIR/$name"
 
   echo "-----------------------------------------"
   echo "[+] Đang tải $name..."
-  curl -L --connect-timeout 30 -o "$sd_path" "$url"
+  curl -L --connect-timeout 30 -o "$path" "$url"
 
-  if [ -f "$sd_path" ] && [ -s "$sd_path" ]; then
+  if [ -f "$path" ] && [ -s "$path" ]; then
     echo "[+] Đang cài đặt $name..."
-    su -c "pm install -r -d -g '$sd_path'" && echo "[✓] Xong $name" || echo "[!] Lỗi lệnh pm install $name"
+    if su -c "pm install -r -d -g '$path'" || su -c "cmd package install -r -d -g '$path'"; then
+      echo "[✓] Đã cài thành công: $name"
+    else
+      echo "[!] Lỗi hệ thống khi cài $name"
+    fi
   else
-    echo "[!] Không tải được $name"
+    echo "[!] Lỗi: Không tải được $name (Kiểm tra file trên Release)"
   fi
 done
 
-rm -rf /sdcard/Download/DeltaClones
-echo "=== HOAN TAT ==="
+# Dọn dẹp
+rm -rf "$DIR"
+
+echo "========================================="
+echo "   Đã hoàn tất quy trình cài đặt ứng dụng"
+echo "========================================="
