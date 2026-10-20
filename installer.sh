@@ -25,7 +25,7 @@ echo "  ██║  ██║█████╗  ██║     ██║   ██
 echo "  ██║  ██║██╔══╝  ██║     ██║   ██╔══██║"
 echo "  ██████╔╝███████╗███████╗██║   ██║  ██║"
 echo "  ╚═════╝ ╚══════╝╚══════╝╚═╝   ╚═╝  ╚═╝"
-echo -e "${PURPLE}       --- AUTO INSTALLER TOOL v1.2 ---${NC}"
+echo -e "${PURPLE}       --- AUTO INSTALLER TOOL v1.3 ---${NC}"
 echo "================================================="
 
 # Tạo thư mục tạm
@@ -34,46 +34,60 @@ rm -rf "$DIR"
 mkdir -p "$DIR"
 
 # ====================================================
-# MENU LỰA CHỌN PHIÊN BẢN DELTA
+# MENU LỰA CHỌN PHIÊN BẢN ỨNG DỤNG
 # ====================================================
-echo -e "${YELLOW}[?] Bạn muốn cài đặt phiên bản Delta nào?${NC}"
-echo -e "  [${GREEN}qt${NC}] : Delta Quốc Tế (4 Clones)"
-echo -e "  [${GREEN}vn${NC}] : Delta VNG (4 Clones)"
+echo -e "${YELLOW}[?] Bạn muốn cài đặt phiên bản nào?${NC}"
+echo -e "  [${GREEN}qt${NC}]  : Delta Quốc Tế (4 Clones)"
+echo -e "  [${GREEN}vn${NC}]  : Delta VNG (4 Clones)"
+echo -e "  [${GREEN}aus${NC}] : Arceus X Quốc Tế (4 Clones)"
 echo "-------------------------------------------------"
-read -p "👉 Nhập lựa chọn (qt/vn): " CHOICE
+read -p "👉 Nhập lựa chọn (qt / vn / aus): " CHOICE
 
-DELTA_LINKS=()
-DELTA_NAMES=()
+CHOSEN_LINKS=()
+CHOSEN_NAMES=()
 
+# Xử lý theo lựa chọn của người dùng
 if [[ "$CHOICE" == "vn" || "$CHOICE" == "VN" ]]; then
   echo -e "${GREEN}[✓] Bạn đã chọn: Delta VNG${NC}"
-  DELTA_LINKS=(
+  CHOSEN_LINKS=(
     "https://github.com/NKDangK0/tools/releases/download/v1.1/deltavn1.apk"
     "https://github.com/NKDangK0/tools/releases/download/v1.1/deltavn2.apk"
     "https://github.com/NKDangK0/tools/releases/download/v1.1/deltavn3.apk"
     "https://github.com/NKDangK0/tools/releases/download/v1.1/deltavn4.apk"
   )
-  DELTA_NAMES=("deltavn1.apk" "deltavn2.apk" "deltavn3.apk" "deltavn4.apk")
+  CHOSEN_NAMES=("deltavn1.apk" "deltavn2.apk" "deltavn3.apk" "deltavn4.apk")
+
+elif [[ "$CHOICE" == "aus" || "$CHOICE" == "AUS" ]]; then
+  echo -e "${GREEN}[✓] Bạn đã chọn: Arceus X Quốc Tế${NC}"
+  CHOSEN_LINKS=(
+    "https://github.com/NKDangK0/tools/releases/download/v1.1/arceus1.apk"
+    "https://github.com/NKDangK0/tools/releases/download/v1.1/arceus2.apk"
+    "https://github.com/NKDangK0/tools/releases/download/v1.1/arceus3.apk"
+    "https://github.com/NKDangK0/tools/releases/download/v1.1/arceus4.apk"
+  )
+  CHOSEN_NAMES=("arceus1.apk" "arceus2.apk" "arceus3.apk" "arceus4.apk")
+
 else
-  echo -e "${GREEN}[✓] Lựa chọn: Delta Quốc Tế${NC}"
-  DELTA_LINKS=(
+  echo -e "${GREEN}[✓] Mặc định / Lựa chọn: Delta Quốc Tế${NC}"
+  CHOSEN_LINKS=(
     "https://github.com/NKDangK0/tools/releases/download/v1.1/delta1.apk"
     "https://github.com/NKDangK0/tools/releases/download/v1.1/delta2.apk"
     "https://github.com/NKDangK0/tools/releases/download/v1.1/delta3.apk"
     "https://github.com/NKDangK0/tools/releases/download/v1.1/delta4.apk"
   )
-  DELTA_NAMES=("delta1.apk" "delta2.apk" "delta3.apk" "delta4.apk")
+  CHOSEN_NAMES=("delta1.apk" "delta2.apk" "delta3.apk" "delta4.apk")
 fi
 
+# Gộp chung với các app tiện ích cố định (MT Manager, ZArchiver, Warp)
 LINKS=(
-  "${DELTA_LINKS[@]}"
+  "${CHOSEN_LINKS[@]}"
   "https://github.com/NKDangK0/tools/releases/download/v1.1/mtmanager.apk"
   "https://github.com/NKDangK0/tools/releases/download/v1.1/zarchiver.apk"
   "https://github.com/NKDangK0/tools/releases/download/v1.1/warp.apk"
 )
 
 NAMES=(
-  "${DELTA_NAMES[@]}"
+  "${CHOSEN_NAMES[@]}"
   "mtmanager.apk"
   "zarchiver.apk"
   "warp.apk"
@@ -83,6 +97,7 @@ echo "================================================="
 echo -e "${CYAN}    BẮT ĐẦU TIẾN TRÌNH TẢI & CÀI ĐẶT TỰ ĐỘNG${NC}"
 echo "================================================="
 
+# Vòng lặp tải và cài đặt
 for i in "${!LINKS[@]}"; do
   url="${LINKS[$i]}"
   name="${NAMES[$i]}"
