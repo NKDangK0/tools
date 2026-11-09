@@ -25,7 +25,7 @@ echo "  ██║  ██║█████╗  ██║     ██║   ██
 echo "  ██║  ██║██╔══╝  ██║     ██║   ██╔══██║"
 echo "  ██████╔╝███████╗███████╗██║   ██║  ██║"
 echo "  ╚═════╝ ╚══════╝╚══════╝╚═╝   ╚═╝  ╚═╝"
-echo -e "${PURPLE}       --- AUTO INSTALLER TOOL v1.3 ---${NC}"
+echo -e "${PURPLE}        --- AUTO INSTALLER TOOL v1.5 ---${NC}"
 echo "================================================="
 
 # Tạo thư mục tạm
@@ -39,9 +39,8 @@ mkdir -p "$DIR"
 echo -e "${YELLOW}[?] Bạn muốn cài đặt phiên bản nào?${NC}"
 echo -e "  [${GREEN}qt${NC}]  : Delta Quốc Tế (4 Clones)"
 echo -e "  [${GREEN}vn${NC}]  : Delta VNG (4 Clones)"
-echo -e "  [${GREEN}aus${NC}] : Arceus X Quốc Tế (4 Clones)"
 echo "-------------------------------------------------"
-read -p "👉 Nhập lựa chọn (qt / vn / aus): " CHOICE
+read -p "👉 Nhập lựa chọn (qt / vn): " CHOICE
 
 CHOSEN_LINKS=()
 CHOSEN_NAMES=()
@@ -56,16 +55,6 @@ if [[ "$CHOICE" == "vn" || "$CHOICE" == "VN" ]]; then
     "https://github.com/NKDangK0/tools/releases/download/v1.1/deltavn4.apk"
   )
   CHOSEN_NAMES=("deltavn1.apk" "deltavn2.apk" "deltavn3.apk" "deltavn4.apk")
-
-elif [[ "$CHOICE" == "aus" || "$CHOICE" == "AUS" ]]; then
-  echo -e "${GREEN}[✓] Bạn đã chọn: Arceus X Quốc Tế${NC}"
-  CHOSEN_LINKS=(
-    "https://github.com/NKDangK0/tools/releases/download/v1.1/arceus1.apk"
-    "https://github.com/NKDangK0/tools/releases/download/v1.1/arceus2.apk"
-    "https://github.com/NKDangK0/tools/releases/download/v1.1/arceus3.apk"
-    "https://github.com/NKDangK0/tools/releases/download/v1.1/arceus4.apk"
-  )
-  CHOSEN_NAMES=("arceus1.apk" "arceus2.apk" "arceus3.apk" "arceus4.apk")
 
 else
   echo -e "${GREEN}[✓] Mặc định / Lựa chọn: Delta Quốc Tế${NC}"
@@ -122,5 +111,5 @@ done
 rm -rf "$DIR"
 
 echo -e "${GREEN}=================================================${NC}"
-echo -e "${GREEN}    HOÀN TẤT TOÀN BỘ TIẾN TRÌNH CÀI ĐẶT!     ${NC}"
+echo -e "${GREEN}    HOÀN TẤT TOÀN BỘ TIẾN TRÌNH CÀI ĐẶT!      ${NC}"
 echo -e "${GREEN}=================================================${NC}"
